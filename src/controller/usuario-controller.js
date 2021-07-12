@@ -1,17 +1,15 @@
-module.exports = app =>{
+
+module.exports = (app, User,bd) =>{
     app.get('/usuarios', (req, res) => {
         res.send('Rastreamento da aplicação sendo feito com nodemon')
       });
 
 
       app.post('/usuarios', (req, res) => {
-        
-        res.send('Rota POST do usuario ativada: usuario adicionado ao banco de dados');
+        let usuario = new User(req.body.nome, req.body.email, req.body.senha)
+        bd.user.push(usuario)
+        res.send('Usuário criado');
         console.log(req.body)
       })
       
 }
-
-
-
-
