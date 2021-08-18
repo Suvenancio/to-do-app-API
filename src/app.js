@@ -1,19 +1,19 @@
 const express = require('express');
 const BodyParser = require('body-parser');
 const app = express();
-const port = 3000
+const port = 3010
 const usuarios = require('./controller/usuario-controller');
 const tarefas = require('./controller/tarefa-controller');
-const User = require('./models/Usermodel')
-const Tarefa = require('./models/Tarefamodels')
-const bd = require('./infra/bd')
 
-app.use(BodyParser.json())
+const bd = require('./infra/sqlite-db')
+const cors = require('cors')
 
-
-usuarios(app,User, bd)
-tarefas(app, Tarefa, bd)
+app.use(express.json())
 
 
+usuarios(app, bd)
+tarefas(app, bd)
 
-app.listen(port, () => {console.log(`3000`)})
+
+
+app.listen(port, () => {console.log(`3010`)})
