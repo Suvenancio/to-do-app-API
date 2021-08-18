@@ -5,6 +5,7 @@ module.exports = (app,bd) =>{
 
   const DaoUser = new UserDAO(bd)
     app.get('/usuarios', async (req, res) => {
+      
         DaoUser.MostrarUser()
           .then((rows) =>{
             res.json({
@@ -16,53 +17,77 @@ module.exports = (app,bd) =>{
           })
       });
       app.get('/usuarios/:ID', async (req, res) => {
-        try{
-          const id = req.params.ID
-          const user = await DaoUser.MostrarUmUser(id)
-          res.status(200).json(user)
-        }catch(e){
-          res.status.json(e)
-        }
+        const id = req.params.ID
+        DaoUser
+        .MostrarUmUser(id)
+        .then((rows) =>{
+          res.json({
+            result:rows
+          })
+        })
+        .catch((e)=>{
+          res.json(e)
+        })
       });
 
 
       app.post('/usuarios', async (req, res) => {
-        const{NOME, EMAIL, SENHA} = req.body
-        const newUsers = new UserModel(NOME, EMAIL, SENHA)
-      
-        try{
-          const novoUsuario = await DaoUser.NewUser(newUsers)
-          res.status(200).json(novoUsuario)
+        const{nome, email, senha} = req.body
+        const newUsers = new UserModel(nome, email, senha)
 
-        }catch(e){
-          res.status(500).json(e)
-        }
+        DaoUser
+        .NewUser(newUsers)
+        .then(()=>{
+          res.status(200).json({
+            message: "Usuário incluído com sucesso!",
+            error: false,
+          })
+        })
+        .catch((e)=>{
+          res.status(500).json({
+            message: "Erro !!",
+            error: true,
+          })
+        })      
+
       })
 
-      app.delete('/usuarios/:ID', async (re,res)=>{
+      app.delete('/usuarios/:ID', async (req,res)=>{
 
         const id = req.params.ID;
-        try{
-
-          const deleteUser = await DaoUser.DeleteUser(id)
-          res.status(200).json(deleteUser)
-        }catch(e){
-          res.status(500).json(e)
-        }
+        DaoUser.DeleteUser(id)
+        .then(()=>{
+          res.status(200).json({
+            message: "Tarefa deletado com sucesso!"
+          })
+        })
+  
+        .catch((e)=>{
+          res.status(500).json({
+            message: "Erro!"
+          })
+        })
 
       })
 
       app.put('/usuarios/:ID', async (req, res)=>{
-        const id = req.body.ID
-        const{NOME, EMAIL, SENHA} = req.body
-        const newUsers = new UserModel(NOME, EMAIL, SENHA)
+        const id = req.params.ID
+        const body = req.body
+        const infos = [body.nome, body.email, body.senha]
+        console.log(infos)
 
-        try{
-          const alterarUser = await DaoUser(newUsers, id)
-          res.status(200).json(alterarUser)
-        }catch(e){
-          res.status(500).json(e)
-        }
+        DaoUser.PutUser(infos,id)
+        .then(() =>{
+          res.status(200).json({
+            message: "Usuário alterdo com sucesso!"
+          })
+        })
+        .catch((e) =>{
+          res.status(500).json({
+            message: "Erro!"
+          })
+        })
+
 
       })
       

@@ -39,19 +39,17 @@ CREATE TABLE IF NOT EXISTS TAREFAS (
     TITULO VARCHAR(64),
     DESCRICAO TEXT,
     STATUS VARCHAR(32),
-    DATACRIACAO VARCHAR(32),
-    ID_USUARIO INTEGER,
-    FOREIGN KEY(ID_USUARIO) REFERENCES USUARIOD(ID)
+    DATACRIACAO VARCHAR(32)
 );`;
 
-const ADD_TAREFAS_DATA = `INSERT INTO TAREFAS (TITULO, DESCRICAO, STATUS, DATACRIACAO, ID_USUARIO)
+const ADD_TAREFAS_DATA = `INSERT INTO TAREFAS (TITULO, DESCRICAO, STATUS, DATACRIACAO)
 VALUES 
-       ('Yoga', 'Fazer yoga segunda e quarta', 'Continuo', '2021-01-10', 2),
-       ('Médico', 'Consulta com Dr. Ayrton sexta', 'TODO', '2021-01-13', 1),
-       ('Pagar contas', 'Pagar boletos de água e luz', 'DOING', '2021-01-02', 2),
-       ('Mercado', 'Pegar lista na geladeira e fazer compras', 'TODO', '2021-01-08', 2),
-       ('Dentista', 'Consulta com Dra Andreia sexta', 'TODO', '2021-01-11', 1),
-       ('Pagar financiamento carro', 'Pagar parcela do mês do financiamento', 'Contínuo', '2021-01-05', 3)
+       ('Yoga', 'Fazer yoga segunda e quarta', 'Continuo', '2021-01-10'),
+       ('Médico', 'Consulta com Dr. Ayrton sexta', 'TODO', '2021-01-13'),
+       ('Pagar contas', 'Pagar boletos de água e luz', 'DOING', '2021-01-02'),
+       ('Mercado', 'Pegar lista na geladeira e fazer compras', 'TODO', '2021-01-08'),
+       ('Dentista', 'Consulta com Dra Andreia sexta', 'TODO', '2021-01-11'),
+       ('Pagar financiamento carro', 'Pagar parcela do mês do financiamento', 'Contínuo', '2021-01-05')
 `
 
 function criaTabelaTarefas() {

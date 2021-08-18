@@ -43,7 +43,7 @@ module.exports = class TarefaDao {
 
             this.bd.run(query, id,(e) =>{
                 if(e) reject(`Erro ao deletar BS ${e}`)
-                else resolve('Tarefa Excluida com sucesso!')
+                else resolve('Tarefa excluída com sucesso!')
             })
 
         })
